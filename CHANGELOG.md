@@ -37,3 +37,11 @@
 ## 0.0.10
 
 - remove `numberWithDecimal` in DataTableFormat. but add List<TextInputFormatter> any format.
+
+## 0.0.11
+
+- add `numberWithDecimal` in DataTableFormat for support version olds
+
+## 0.0.12
+
+- add `withButtonClear` in DataTableFormat

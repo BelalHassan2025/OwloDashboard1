@@ -6,12 +6,12 @@ class DatatableHeader {
   final String value;
   final bool sortable;
   final bool editable;
+  final bool withButtonClear;
   bool show;
   final TextAlign textAlign;
   final int flex;
   final Widget Function(dynamic value)? headerBuilder;
-  final Widget Function(dynamic value, Map<String?, dynamic> row)?
-      sourceBuilder;
+  final Widget Function(dynamic value, Map<String?, dynamic> row)? sourceBuilder;
   final DataTableFormat format;
   final List<String> items;
   final List<TextInputFormatter>? textInputFormatter;
@@ -23,6 +23,7 @@ class DatatableHeader {
     this.sortable = false,
     this.show = true,
     this.editable = false,
+    this.withButtonClear = false,
     this.flex = 1,
     this.format = DataTableFormat.normal,
     this.headerBuilder,
@@ -65,4 +66,5 @@ enum DataTableFormat {
   dateTime,
   number,
   list,
+  numberWithDecimal,
 }

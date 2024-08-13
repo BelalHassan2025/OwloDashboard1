@@ -26,10 +26,8 @@ class XDataTable extends StatefulWidget {
 
   final List<bool>? expanded;
   final Widget Function(Map<String, dynamic> value)? dropContainer;
-  final Function(Map<String, dynamic> value, DatatableHeader header)?
-      onChangedRow;
-  final Function(Map<String, dynamic> value, DatatableHeader header)?
-      onSubmittedRow;
+  final Function(Map<String, dynamic> value, DatatableHeader header)? onChangedRow;
+  final Function(Map<String, dynamic> value, DatatableHeader header)? onSubmittedRow;
 
   /// `reponseScreenSizes`
   ///
@@ -95,11 +93,7 @@ class XDataTable extends StatefulWidget {
     this.dropContainer,
     this.onChangedRow,
     this.onSubmittedRow,
-    this.reponseScreenSizes = const [
-      ScreenSize.xs,
-      ScreenSize.sm,
-      ScreenSize.md
-    ],
+    this.reponseScreenSizes = const [ScreenSize.xs, ScreenSize.sm, ScreenSize.md],
     this.headerDecoration,
     this.rowDecoration,
     this.selectedDecoration,
@@ -119,9 +113,7 @@ class _XDataTableState extends State<XDataTable> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Checkbox(
-          value: widget.selecteds!.length == widget.source!.length &&
-              widget.source != null &&
-              widget.source!.isNotEmpty,
+          value: widget.selecteds!.length == widget.source!.length && widget.source != null && widget.source!.isNotEmpty,
           onChanged: (value) {
             if (widget.onSelectAll != null) widget.onSelectAll!(value);
           },
@@ -141,11 +133,8 @@ class _XDataTableState extends State<XDataTable> {
                           header.text,
                           textAlign: header.textAlign,
                         ),
-                        if (widget.sortColumn != null &&
-                            widget.sortColumn == header.value)
-                          widget.sortAscending!
-                              ? const Icon(Icons.arrow_downward, size: 15)
-                              : const Icon(Icons.arrow_upward, size: 15)
+                        if (widget.sortColumn != null && widget.sortColumn == header.value)
+                          widget.sortAscending! ? const Icon(Icons.arrow_downward, size: 15) : const Icon(Icons.arrow_upward, size: 15)
                       ],
                     ),
                   ))
@@ -163,17 +152,14 @@ class _XDataTableState extends State<XDataTable> {
   }
 
   List<Widget> mobileList() {
-    final decoration = BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)));
+    final decoration = BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)));
     final rowDecoration = widget.rowDecoration ?? decoration;
     final selectedDecoration = widget.selectedDecoration ?? decoration;
     return widget.source!.map((data) {
       return InkWell(
         onTap: () => widget.onTabRow?.call(data),
         child: Container(
-          decoration: widget.selecteds!.contains(data)
-              ? selectedDecoration
-              : rowDecoration,
+          decoration: widget.selecteds!.contains(data) ? selectedDecoration : rowDecoration,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -191,8 +177,7 @@ class _XDataTableState extends State<XDataTable> {
                         }),
                 ],
               ),
-              if (widget.commonMobileView && widget.dropContainer != null)
-                widget.dropContainer!(data),
+              if (widget.commonMobileView && widget.dropContainer != null) widget.dropContainer!(data),
               if (!widget.commonMobileView)
                 ...widget.headers
                     .where((header) => header.show == true)
@@ -208,14 +193,11 @@ class _XDataTableState extends State<XDataTable> {
                                 : Text(
                                     header.text,
                                     overflow: TextOverflow.clip,
-                                    style: widget.selecteds!.contains(data)
-                                        ? widget.selectedTextStyle
-                                        : widget.rowTextStyle,
+                                    style: widget.selecteds!.contains(data) ? widget.selectedTextStyle : widget.rowTextStyle,
                                   ),
                             const Spacer(),
                             header.sourceBuilder != null
-                                ? header.sourceBuilder!(
-                                    data[header.value], data)
+                                ? header.sourceBuilder!(data[header.value], data)
                                 : header.editable
                                     ? TextEditableWidget(
                                         data: data,
@@ -230,10 +212,7 @@ class _XDataTableState extends State<XDataTable> {
                                         child: Text(
                                           "${data[header.value]}",
                                           textAlign: header.textAlign,
-                                          style:
-                                              widget.selecteds!.contains(data)
-                                                  ? widget.selectedTextStyle
-                                                  : widget.rowTextStyle,
+                                          style: widget.selecteds!.contains(data) ? widget.selectedTextStyle : widget.rowTextStyle,
                                         ),
                                       )
                           ],
@@ -262,10 +241,7 @@ class _XDataTableState extends State<XDataTable> {
   }
 
   Widget desktopHeader() {
-    final headerDecoration = widget.headerDecoration ??
-        BoxDecoration(
-            border:
-                Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)));
+    final headerDecoration = widget.headerDecoration ?? BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)));
     return Container(
       decoration: headerDecoration,
       child: Row(
@@ -273,9 +249,7 @@ class _XDataTableState extends State<XDataTable> {
         children: [
           if (widget.showSelect && widget.selecteds != null)
             Checkbox(
-                value: widget.selecteds!.length == widget.source!.length &&
-                    widget.source != null &&
-                    widget.source!.isNotEmpty,
+                value: widget.selecteds!.length == widget.source!.length && widget.source != null && widget.source!.isNotEmpty,
                 onChanged: (value) {
                   if (widget.onSelectAll != null) widget.onSelectAll!(value);
                 }),
@@ -303,13 +277,8 @@ class _XDataTableState extends State<XDataTable> {
                                     textAlign: header.textAlign,
                                     style: widget.headerTextStyle,
                                   ),
-                                  if (widget.sortColumn != null &&
-                                      widget.sortColumn == header.value)
-                                    widget.sortAscending!
-                                        ? const Icon(Icons.arrow_downward,
-                                            size: 15)
-                                        : const Icon(Icons.arrow_upward,
-                                            size: 15)
+                                  if (widget.sortColumn != null && widget.sortColumn == header.value)
+                                    widget.sortAscending! ? const Icon(Icons.arrow_downward, size: 15) : const Icon(Icons.arrow_upward, size: 15)
                                 ],
                               ),
                             ),
@@ -322,8 +291,7 @@ class _XDataTableState extends State<XDataTable> {
   }
 
   List<Widget> desktopList() {
-    final decoration = BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)));
+    final decoration = BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)));
     final rowDecoration = widget.rowDecoration ?? decoration;
     final selectedDecoration = widget.selectedDecoration ?? decoration;
     List<Widget> widgets = [];
@@ -340,9 +308,7 @@ class _XDataTableState extends State<XDataTable> {
             },
             child: Container(
               padding: EdgeInsets.all(widget.showSelect ? 0 : 11),
-              decoration: widget.selecteds!.contains(data)
-                  ? selectedDecoration
-                  : rowDecoration,
+              decoration: widget.selecteds!.contains(data) ? selectedDecoration : rowDecoration,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -378,9 +344,7 @@ class _XDataTableState extends State<XDataTable> {
                                   : Text(
                                       "${data[header.value]}",
                                       textAlign: header.textAlign,
-                                      style: widget.selecteds!.contains(data)
-                                          ? widget.selectedTextStyle
-                                          : widget.rowTextStyle,
+                                      style: widget.selecteds!.contains(data) ? widget.selectedTextStyle : widget.rowTextStyle,
                                     ),
                         ),
                       )
@@ -389,10 +353,7 @@ class _XDataTableState extends State<XDataTable> {
               ),
             ),
           ),
-          if (widget.isExpandRows &&
-              widget.expanded![index] &&
-              widget.dropContainer != null)
-            widget.dropContainer!(data)
+          if (widget.isExpandRows && widget.expanded![index] && widget.dropContainer != null) widget.dropContainer!(data)
         ],
       ));
     }
@@ -401,8 +362,7 @@ class _XDataTableState extends State<XDataTable> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.reponseScreenSizes.isNotEmpty &&
-            widget.reponseScreenSizes.contains(context.screenSize)
+    return widget.reponseScreenSizes.isNotEmpty && widget.reponseScreenSizes.contains(context.screenSize)
         ?
 
         /// for small screen
@@ -413,23 +373,17 @@ class _XDataTableState extends State<XDataTable> {
               if (widget.title != null || widget.actions != null)
                 Container(
                   padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      border:
-                          Border(bottom: BorderSide(color: Colors.grey[300]!))),
+                  decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[300]!))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (widget.title != null) widget.title!,
-                      if (widget.actions != null) ...widget.actions!
-                    ],
+                    children: [if (widget.title != null) widget.title!, if (widget.actions != null) ...widget.actions!],
                   ),
                 ),
 
               if (widget.autoHeight)
                 Column(
                   children: [
-                    if (widget.showSelect && widget.selecteds != null)
-                      mobileHeader(),
+                    if (widget.showSelect && widget.selecteds != null) mobileHeader(),
                     if (widget.isLoading) const LinearProgressIndicator(),
                     ...mobileList(),
                   ],
@@ -439,8 +393,7 @@ class _XDataTableState extends State<XDataTable> {
                   child: ListView(
                     /// itemCount: source.length,
                     children: [
-                      if (widget.showSelect && widget.selecteds != null)
-                        mobileHeader(),
+                      if (widget.showSelect && widget.selecteds != null) mobileHeader(),
                       if (widget.isLoading) const LinearProgressIndicator(),
 
                       /// mobileList
@@ -466,15 +419,10 @@ class _XDataTableState extends State<XDataTable> {
               if (widget.title != null || widget.actions != null)
                 Container(
                   padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      border:
-                          Border(bottom: BorderSide(color: Colors.grey[300]!))),
+                  decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[300]!))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (widget.title != null) widget.title!,
-                      if (widget.actions != null) ...widget.actions!
-                    ],
+                    children: [if (widget.title != null) widget.title!, if (widget.actions != null) ...widget.actions!],
                   ),
                 ),
 
@@ -487,8 +435,7 @@ class _XDataTableState extends State<XDataTable> {
 
               if (!widget.autoHeight)
                 // desktopList
-                if (widget.source != null && widget.source!.isNotEmpty)
-                  Expanded(child: ListView(children: desktopList())),
+                if (widget.source != null && widget.source!.isNotEmpty) Expanded(child: ListView(children: desktopList())),
 
               //footer
               if (widget.footers != null)
@@ -533,8 +480,7 @@ class TextEditableWidget extends StatelessWidget {
   /// `onSubmitted`
   ///
   /// trigger the call back when user press done or enter
-  final Function(Map<String, dynamic> vaue, DatatableHeader header)?
-      onSubmitted;
+  final Function(Map<String, dynamic> vaue, DatatableHeader header)? onSubmitted;
 
   ///`timeToSubtract`
   ///
@@ -573,14 +519,19 @@ class TextEditableWidget extends StatelessWidget {
               inputFormatters: header.textInputFormatter,
               keyboardType: header.format == DataTableFormat.number
                   ? TextInputType.number
-                  : null,
+                  : header.format == DataTableFormat.numberWithDecimal
+                      ? const TextInputType.numberWithOptions(decimal: true)
+                      : null,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(0),
-                border: hideUnderline
-                    ? InputBorder.none
-                    : const UnderlineInputBorder(
-                        borderSide: BorderSide(width: 1)),
+                border: hideUnderline ? InputBorder.none : const UnderlineInputBorder(borderSide: BorderSide(width: 1)),
                 alignLabelWithHint: true,
+                suffixIcon: header.withButtonClear
+                    ? IconButton(
+                        onPressed: controller.clear,
+                        icon: const Icon(Icons.clear),
+                      )
+                    : null,
               ),
               textAlign: textAlign,
               controller: controller,
@@ -588,19 +539,9 @@ class TextEditableWidget extends StatelessWidget {
                 data[header.value] = newValue;
                 onChanged?.call(data, header);
               },
-              readOnly: header.format == DataTableFormat.date ||
-                      header.format == DataTableFormat.dateTime ||
-                      header.format == DataTableFormat.time
-                  ? true
-                  : false,
+              readOnly: header.format == DataTableFormat.date || header.format == DataTableFormat.dateTime || header.format == DataTableFormat.time ? true : false,
               onTap: header.format == DataTableFormat.date
-                  ? () => UtilTable.selectDate(
-                      context: context,
-                      data: data,
-                      header: header,
-                      controller: controller,
-                      onChanged: onChanged,
-                      timeToSubtract: timeToSubtract)
+                  ? () => UtilTable.selectDate(context: context, data: data, header: header, controller: controller, onChanged: onChanged, timeToSubtract: timeToSubtract)
                   : header.format == DataTableFormat.time
                       ? () => UtilTable.selectTime(
                             context: context,
